@@ -29,12 +29,11 @@ table {
     background-color: #f2f2f2;
   }
 
-h2 {
+h1 {
     width: 100%;
     background-color: red;
     text-align: center;
-    height: 100%;
-}
+    font-size:40px
 /*
 .container {
     width: 300px;

@@ -77,7 +77,7 @@ function mainTable() {
     return table;
 }
 
-function createTableInfo(objTable) {
+function createHeaderTable(objTable) {
     const table = objTable;
     const row = table.insertRow(-1);
     const headerCell0 = document.createElement("TH");
@@ -177,10 +177,10 @@ function clearContainer() {
         if (listEmpty != "") {
             //Clean table
             elementExists.innerHTML = ""; 
-            createTableInfo(modifyTable());
+            createHeaderTable(modifyTable());
         }
     } else {
         //Create new table
-        createTableInfo(createTable());
+        createHeaderTable(createTable());
     }
 }
