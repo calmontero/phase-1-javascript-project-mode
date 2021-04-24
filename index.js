@@ -1,12 +1,7 @@
 const BASE_URL = "http://lookup-service-prod.mlb.com/json/";
-/*this variable is to identify the info detail to show
-0 - default => Show roster
-1 - show player info
-*/
-let option = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
-    showData();
+    getDataTeam();
 })
 
 ///////////////////////FECTH ZONE////////////////////////////////////
@@ -24,7 +19,7 @@ const getDataTeam = () => {
         const queryResults = team_all_season.queryResults;
         const row = queryResults.row;
         const teamsArray = [...row];
-        showDataTeam(teamsArray);
+        showData(teamsArray,mainTable(),0);
     })
 }
 
@@ -42,7 +37,7 @@ const getRoster = (idTeam) => {
         const queryResults = roster_40.queryResults;
         const row = queryResults.row;
         const teamsArray = [...row];
-        showTeamRoster(teamsArray);
+        showData(teamsArray,modifyTable(),1);
     })
 }
 
@@ -66,43 +61,24 @@ function getPlayerById(idPlayer) {
 
 /////////////////////////////////////////////////////////////////////
 
-function showData() {
-    getDataTeam();
-}
-
-function createTableInfo() {
+function createTable() {
     const table = document.createElement('table');
     table.setAttribute("id", "table-body2");
-    
-    const row = table.insertRow(0);
-    //const row = table.insertRow(-1);
-    const headerCell0 = document.createElement("TH");
-    const headerCell1 = document.createElement("TH");
-    const headerCell2 = document.createElement("TH");
-    headerCell0.innerHTML = "Name";
-    headerCell1.innerHTML = "Position";
-    headerCell2.textContent = "Team";
-    row.appendChild(headerCell0);
-    row.appendChild(headerCell1);
-    row.appendChild(headerCell2);
-
-    //Add data from Array
-    const td1 = document.createElement('td');
-    const td2 = document.createElement('td');
-    const td3 = document.createElement('td');
-    const tr = document.createElement('tr');
-
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
-
-    table.appendChild(tr);
-    document.body.appendChild(table);  
+    return table;
 }
 
-function modifyTableInfo() {
+function modifyTable() {
     const table = document.querySelector("#table-body2");
-  
+    return table;
+}
+
+function mainTable() {
+    const table = document.querySelector("#table-body");
+    return table;
+}
+
+function createTableInfo(objTable) {
+    const table = objTable;
     const row = table.insertRow(-1);
     const headerCell0 = document.createElement("TH");
     const headerCell1 = document.createElement("TH");
@@ -128,37 +104,17 @@ function modifyTableInfo() {
     document.body.appendChild(table);  
 }
 
-function showPlayerInfo(objPlayer) {
-    
-}
-
-function showDataTeam(objTeam) {
-    const teamContainer = document.querySelector("#table-body");
+function showData(objTeam,objTable,option) {
+    const dataContainer = objTable;
         objTeam.forEach(obj => {
-        const teamTable = createTableTeam(obj);
-        teamContainer.appendChild(teamTable);
+            if (option === 0) {
+                const dataTable = createTableTeam(obj);
+                dataContainer.appendChild(dataTable);
+            } else {
+                const rosterTable = createTableRoster(obj);
+                dataContainer.appendChild(rosterTable);
+            }
     });
-}
-
-function showTeamRoster(objTeam) {
-    const rosterContainer = document.querySelector("#table-body2");
-    objTeam.forEach(obj => {
-        const rosterTable = createTableRoster(obj);
-        rosterContainer.appendChild(rosterTable);
-    });
-}
-
-function createTableRoster(obj) {
-    const tr = document.createElement("tr");
-    const tdName = document.createElement("td");
-    const tdPosition = document.createElement("td");
-    const tdTeam = document.createElement("td");
-    tdName.textContent = obj.name_full;
-    tdPosition.textContent = obj.position_txt;
-    tdTeam.textContent = obj.team_name;
-    tr.append(tdName,tdPosition,tdTeam);
-    
-    return tr;
 }
 
 function createTableTeam(obj) {
@@ -166,8 +122,7 @@ function createTableTeam(obj) {
     const tdName = document.createElement("td");
     const tdCity = document.createElement("td");
     const tdWebSite = document.createElement("td");
-    //const tdOption = document.createElement("td");
-        //Create Button to select roster
+        //Create Button to select roster/////////////////////
         const selectBttn =  document.createElement("td"),
         teamBttn = document.createElement("button");
         teamBttn.innerText = 'Roster';
@@ -182,13 +137,24 @@ function createTableTeam(obj) {
         a.href = `https://${obj.base_url}`;
         a.textContent = obj.base_url; 
         tdWebSite.appendChild(a);
-
+        ////////////////////////////////////////////////////
+        
     tdName.textContent = obj.name_display_full;
     tdCity.textContent = obj.city;
-
     tr.append(tdName,tdCity,tdWebSite,selectBttn);
-    
     return tr;    
+}
+
+function createTableRoster(obj) {
+    const tr = document.createElement("tr");
+    const tdName = document.createElement("td");
+    const tdPosition = document.createElement("td");
+    const tdTeam = document.createElement("td");
+    tdName.textContent = obj.name_full;
+    tdPosition.textContent = obj.position_txt;
+    tdTeam.textContent = obj.team_name;
+    tr.append(tdName,tdPosition,tdTeam);
+    return tr;
 }
 
 function handleClick(e) {
@@ -204,14 +170,17 @@ function handleClick(e) {
 }
 
 function clearContainer() {
+    //Verify if table exists
     const elementExists = document.getElementById("table-body2");
     if (elementExists != null) {
         const listEmpty = elementExists.innerHTML.trim();
         if (listEmpty != "") {
+            //Clean table
             elementExists.innerHTML = ""; 
-            modifyTableInfo();
+            createTableInfo(modifyTable());
         }
     } else {
-        createTableInfo();
+        //Create new table
+        createTableInfo(createTable());
     }
 }
