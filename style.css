@@ -1,9 +1,40 @@
+* {
+    box-sizing: border-box;
+  }
 
-/*
-#header {
+.row {
+    margin-left:-5px;
+    margin-right:-5px;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 5px;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 50%;
+    border: 2px solid #ddd;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 16px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+h2 {
     width: 100%;
     background-color: red;
+    text-align: center;
 }
+/*
 .container {
     width: 300px;
     margin: auto;

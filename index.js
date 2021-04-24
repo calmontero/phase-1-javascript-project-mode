@@ -74,21 +74,27 @@ function createTableInfo() {
     const table = document.createElement('table');
     table.setAttribute("id", "table-body2");
     
-    const row = table.insertRow(-1);
+    const row = table.insertRow(0);
+    //const row = table.insertRow(-1);
     const headerCell0 = document.createElement("TH");
     const headerCell1 = document.createElement("TH");
+    //const headerCell2 = document.createElement("TH");
     headerCell0.innerHTML = "Name";
     headerCell1.innerHTML = "Position";
+    //headerCell2.textContent = "";
     row.appendChild(headerCell0);
     row.appendChild(headerCell1);
+    //row.appendChild(headerCell2);
 
     //Add data from Array
     const td1 = document.createElement('td');
     const td2 = document.createElement('td');
+    //const td3 = document.createElement('td');
     const tr = document.createElement('tr');
 
     tr.appendChild(td1);
     tr.appendChild(td2);
+    //tr.appendChild(td3);
 
     table.appendChild(tr);
     document.body.appendChild(table);  
@@ -96,23 +102,27 @@ function createTableInfo() {
 
 function modifyTableInfo() {
     const table = document.querySelector("#table-body2");
-    //table.setAttribute("id", "table-body2");
-    
+  
     const row = table.insertRow(-1);
     const headerCell0 = document.createElement("TH");
     const headerCell1 = document.createElement("TH");
+    //const headerCell2 = document.createElement("TH");
     headerCell0.innerHTML = "Name";
     headerCell1.innerHTML = "Position";
+    //headerCell2.textContent = "";
     row.appendChild(headerCell0);
     row.appendChild(headerCell1);
+    //row.appendChild(headerCell2);
 
     //Add data from Array
     const td1 = document.createElement('td');
     const td2 = document.createElement('td');
+    //const td3 = document.createElement('td');
     const tr = document.createElement('tr');
 
     tr.appendChild(td1);
     tr.appendChild(td2);
+    //tr.appendChild(td3);
 
     table.appendChild(tr);
     document.body.appendChild(table);  
@@ -142,6 +152,7 @@ function createTableRoster(obj) {
     const tr = document.createElement("tr");
     const tdName = document.createElement("td");
     const tdPosition = document.createElement("td");
+    /*
         //Create Button to select player
         const selectBttn =  document.createElement("td"),
         playerBttn = document.createElement("button");
@@ -149,12 +160,13 @@ function createTableRoster(obj) {
         playerBttn.dataset.id = obj.player_id;
         playerBttn.addEventListener('click', handleClick);
         playerBttn.myParam = 1;
-        selectBttn.append(playerBttn);
+        selectBttn.append(playerBttn); */
 
     tdName.textContent = obj.name_full;
     tdPosition.textContent= obj.position_txt;
 
-    tr.append(tdName,tdPosition,selectBttn);
+    tr.append(tdName,tdPosition);
+    //tr.append(tdName,tdPosition,selectBttn);
     return tr;
 }
 
@@ -163,10 +175,11 @@ function createTableTeam(obj) {
     const tdName = document.createElement("td");
     const tdCity = document.createElement("td");
     const tdWebSite = document.createElement("td");
+    const tdOption = document.createElement("td");
     //Create Button to select team
     const selectBttn =  document.createElement("td"),
     teamBttn = document.createElement("button");
-    teamBttn.innerText = 'Select';
+    teamBttn.innerText = 'Roster';
     teamBttn.dataset.id = obj.team_id;
     teamBttn.addEventListener('click', handleClick);
     teamBttn.myParam = 0;
