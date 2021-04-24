@@ -71,29 +71,52 @@ function showData() {
 }
 
 function createTableInfo() {
+    const table = document.createElement('table');
+    table.setAttribute("id", "table-body2");
+    
+    const row = table.insertRow(-1);
+    const headerCell0 = document.createElement("TH");
+    const headerCell1 = document.createElement("TH");
+    headerCell0.innerHTML = "Name";
+    headerCell1.innerHTML = "Position";
+    row.appendChild(headerCell0);
+    row.appendChild(headerCell1);
 
-        const table = document.createElement('table');
-        table.setAttribute("id", "table-body2");
-        const tr = document.createElement('tr');
+    //Add data from Array
+    const td1 = document.createElement('td');
+    const td2 = document.createElement('td');
+    const tr = document.createElement('tr');
 
-        const row = table.insertRow(-1);
-        const headerCell0 = document.createElement("TH");
-        const headerCell1 = document.createElement("TH");
-        headerCell0.innerHTML = "Name";
-        headerCell1.innerHTML = "Position";
-        row.appendChild(headerCell0);
-        row.appendChild(headerCell1);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
 
-        //Add data from Array
-        const td1 = document.createElement('td');
-        const td2 = document.createElement('td');
-        tr.appendChild(td1);
-        tr.appendChild(td2);
-
-        table.appendChild(tr);
-        document.body.appendChild(table);  
+    table.appendChild(tr);
+    document.body.appendChild(table);  
 }
 
+function modifyTableInfo() {
+    const table = document.querySelector("#table-body2");
+    //table.setAttribute("id", "table-body2");
+    
+    const row = table.insertRow(-1);
+    const headerCell0 = document.createElement("TH");
+    const headerCell1 = document.createElement("TH");
+    headerCell0.innerHTML = "Name";
+    headerCell1.innerHTML = "Position";
+    row.appendChild(headerCell0);
+    row.appendChild(headerCell1);
+
+    //Add data from Array
+    const td1 = document.createElement('td');
+    const td2 = document.createElement('td');
+    const tr = document.createElement('tr');
+
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+
+    table.appendChild(tr);
+    document.body.appendChild(table);  
+}
 
 function showPlayerInfo(objPlayer) {
     
@@ -108,7 +131,6 @@ function showDataTeam(objTeam) {
 }
 
 function showTeamRoster(objTeam) {
-    createTableInfo();
     const rosterContainer = document.querySelector("#table-body2");
     objTeam.forEach(obj => {
         const rosterTable = createTableRoster(obj);
@@ -164,7 +186,7 @@ function createTableTeam(obj) {
 }
 
 function handleClick(e) {
-    //clearContainer();
+    clearContainer();
     let option = e.target.myParam
     let id = e.target.dataset.id;
 
@@ -176,12 +198,15 @@ function handleClick(e) {
 }
 
 function clearContainer() {
-    var elementExists = document.getElementById("table-body2");
+    const elementExists = document.getElementById("table-body2");
     if (elementExists != null) {
         const listEmpty = elementExists.innerHTML.trim();
         if (listEmpty != "") {
             elementExists.innerHTML = ""; 
+            modifyTableInfo();
         }
+    } else {
+        createTableInfo();
     }
 }
     
