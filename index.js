@@ -74,17 +74,6 @@ function createHeaderTable(objTable) {
     row.appendChild(headerCell1);
     row.appendChild(headerCell2);
 
-    //Add data from Array
-    const td1 = document.createElement('td');
-    const td2 = document.createElement('td');
-    const td3 = document.createElement('td');
-    const tr = document.createElement('tr');
-
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
-
-    table.appendChild(tr);
     document.body.appendChild(table);  
 }
 
@@ -143,14 +132,9 @@ function createTableRoster(obj) {
 
 function handleClick(e) {
     clearContainer();
-    let option = e.target.myParam
+    //let option = e.target.myParam
     let id = e.target.dataset.id;
-
-    if (option === 0) {    
-        getRoster(id);
-    } else {
-        console.log(id);
-    }
+    getRoster(id);
 }
 
 function clearContainer() {
