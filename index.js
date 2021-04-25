@@ -70,6 +70,7 @@ function createHeaderTable(objTable) {
     headerCell0.innerHTML = "Name";
     headerCell1.innerHTML = "Position";
     headerCell2.textContent = "Team";
+
     row.appendChild(headerCell0);
     row.appendChild(headerCell1);
     row.appendChild(headerCell2);
@@ -132,7 +133,6 @@ function createTableRoster(obj) {
 
 function handleClick(e) {
     clearContainer();
-    //let option = e.target.myParam
     let id = e.target.dataset.id;
     getRoster(id);
 }
