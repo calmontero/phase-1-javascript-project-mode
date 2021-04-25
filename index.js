@@ -1,4 +1,4 @@
-const BASE_URL = "http://lookup-service-prod.mlb.com/json/";
+const BASE_URL = "https://lookup-service-prod.mlb.com/json/";
 
 document.addEventListener('DOMContentLoaded', () => {
     getDataTeam();
@@ -21,6 +21,7 @@ const getDataTeam = () => {
         const teamsArray = [...row];
         showData(teamsArray,mainTable(),0);
     })
+    .catch(err => console.log(err))
 }
 
 const getRoster = (idTeam) => {
@@ -39,24 +40,7 @@ const getRoster = (idTeam) => {
         const teamsArray = [...row];
         showData(teamsArray,modifyTable(),1);
     })
-}
-
-function getPlayerById(idPlayer) {
-    const url = `${BASE_URL}named.player_info.bam?sport_code='mlb'&player_id=${idPlayer}`;
-    return fetch(url , {
-        method: "GET",
-        headers: {
-            "content-type": "application/json"
-        }
-    })
-    .then(res => res.json())
-    .then(res => {
-        const player_info = res.roster_40;
-        const queryResults = player_info.queryResults;
-        const row = queryResults.row;
-        const teamsArray = [...row];
-        showPlayerInfo(teamsArray);
-    })
+    .catch(err => console.log(err))
 }
 
 /////////////////////////////////////////////////////////////////////
