@@ -19,7 +19,7 @@ const getDataTeam = () => {
         const queryResults = team_all_season.queryResults;
         const row = queryResults.row;
         const teamsArray = [...row];
-        showData(teamsArray,mainTable(),0);
+        showData(teamsArray,0);
     })
     .catch(err => console.log(err))
 }
@@ -38,28 +38,12 @@ const getRoster = (idTeam) => {
         const queryResults = roster_40.queryResults;
         const row = queryResults.row;
         const teamsArray = [...row];
-        showData(teamsArray,modifyTable(),1);
+        showData(teamsArray,1);
     })
     .catch(err => console.log(err))
 }
 
 /////////////////////////////////////////////////////////////////////
-
-function createTable() {
-    const table = document.createElement('table');
-    table.setAttribute("id", "table-body2");
-    return table;
-}
-
-function modifyTable() {
-    const table = document.querySelector("#table-body2");
-    return table;
-}
-
-function mainTable() {
-    const table = document.querySelector("#table-body");
-    return table;
-}
 
 function createHeaderTable(objTable) {
     const table = objTable;
@@ -78,16 +62,17 @@ function createHeaderTable(objTable) {
     document.body.appendChild(table);  
 }
 
-function showData(objTeam,objTable,option) {
-    const dataContainer = objTable;
-        objTeam.forEach(obj => {
-            if (option === 0) {
-                const dataTable = createTableTeam(obj);
-                dataContainer.appendChild(dataTable);
-            } else {
-                const rosterTable = createTableRoster(obj);
-                dataContainer.appendChild(rosterTable);
-            }
+function showData(objTeam,option) {
+    objTeam.forEach(obj => {
+        if (option === 0) {
+            const dataTeamContainer = document.querySelector("#table-body");
+            const dataTable = createTableTeam(obj);
+            dataTeamContainer.appendChild(dataTable);
+        } else {
+            const dataRosterContainer = document.querySelector("#table-body2");
+            const rosterTable = createTableRoster(obj);
+            dataRosterContainer.appendChild(rosterTable);
+        }
     });
 }
 
@@ -102,7 +87,6 @@ function createTableTeam(obj) {
         teamBttn.innerText = 'Roster';
         teamBttn.dataset.id = obj.team_id;
         teamBttn.addEventListener('click', handleClick);
-        teamBttn.myParam = 0;
         selectBttn.append(teamBttn);
 
         //add url
@@ -139,16 +123,18 @@ function handleClick(e) {
 
 function clearContainer() {
     //Verify if table exists
-    const elementExists = document.getElementById("table-body2");
+    const elementExists = document.querySelector("#table-body2");
     if (elementExists != null) {
         const listEmpty = elementExists.innerHTML.trim();
         if (listEmpty != "") {
             //Clean table
             elementExists.innerHTML = ""; 
-            createHeaderTable(modifyTable());
+            createHeaderTable(elementExists);
         }
     } else {
         //Create new table
-        createHeaderTable(createTable());
+        const table = document.createElement('table');
+        table.setAttribute("id", "table-body2");
+        createHeaderTable(table);
     }
 }
